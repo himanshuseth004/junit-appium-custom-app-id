@@ -21,8 +21,6 @@ public class android {
             : System.getenv("LT_ACCESS_KEY");
     public static RemoteWebDriver driver = null;
     public String gridURL = "@mobile-hub.lambdatest.com/wd/hub";
-
-    //MARKING TEST AS PASSED
     public String status = "passed";
     @Before
     public void setUp() throws Exception {
@@ -31,14 +29,18 @@ public class android {
         capabilities.setCapability("build", "JUNIT Native App automation");
         capabilities.setCapability("name", "Java JUnit Android Pixel 6");
         capabilities.setCapability("platformName", "android");
-        capabilities.setCapability("deviceName", "Pixel 6"); //Enter the name of the device here
+        capabilities.setCapability("deviceName", "Pixel 6"); 
         capabilities.setCapability("isRealMobile", true);
         capabilities.setCapability("platformVersion","12");
-        capabilities.setCapability("app","App_ID"); //Enter the App ID here
+        
+        //Enter the Custom_ID here that was used to upload your application
+        capabilities.setCapability("app", "ENTER_CUSTOM_ID_HERE");
+
         capabilities.setCapability("deviceOrientation", "PORTRAIT");
         capabilities.setCapability("console",true);
         capabilities.setCapability("network",true);
         capabilities.setCapability("visual",true);
+
         try
         {
             driver = new RemoteWebDriver(new URL("https://" + username + ":" + accessKey + gridURL), capabilities);
@@ -70,22 +72,11 @@ public class android {
 
             wait.until(ExpectedConditions.elementToBeClickable(MobileBy.id("toast"))).click();
 
-            wait.until(ExpectedConditions.elementToBeClickable(By.id("Browser"))).click();;
-            Thread.sleep(10000);
-
-            wait.until(ExpectedConditions.elementToBeClickable(MobileBy.id("url"))).sendKeys("https://www.lambdatest.com/");
-
-            wait.until(ExpectedConditions.elementToBeClickable(MobileBy.id("find"))).click();
-            Thread.sleep(5000);
-            driver.navigate().back();
-
-            //MARKING TEST AS PASSED
             status="passed"; 
         }
             catch (Exception e)
              {
                 System.out.println(e.getMessage());
-                //MARKING TEST AS FAILED
                 status="failed";
              }
     }
@@ -99,4 +90,3 @@ public class android {
         }
     }
 }
-
